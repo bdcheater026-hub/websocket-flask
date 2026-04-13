@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Realtime News</title>
+</head>
+<body>
+
+<h2>Data Berita (Realtime)</h2>
+<ul id="data"></ul>
+
+<script>
+let ws = new WebSocket("ws://localhost:8765");
+
+ws.onopen = function() {
+    console.log("✅ Terhubung ke server");
+};
+
+ws.onerror = function(error) {
+    console.log("❌ Error:", error);
+};
+
+ws.onmessage = function(event) {
+    let data = JSON.parse(event.data);
+    let list = document.getElementById("data");
+
+    list.innerHTML = "";
+
+    data.forEach(item => {
+        let li = document.createElement("li");
+        li.innerHTML = `
+            <b>${item.title}</b><br>
+            <small>${item.content}</small><br>
+            <a href="${item.link}" target="_blank">Baca</a>
+            <hr>
+        `;
+        list.appendChild(li);
+    });
+};
+</script>
+
+</body>
+</html>
