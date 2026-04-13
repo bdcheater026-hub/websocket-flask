@@ -56,7 +56,7 @@ async def handler(websocket):
         while True:
             data = scrape_data()
             await websocket.send(json.dumps(data, ensure_ascii=False))
-            print("📡 Data dikirim")
+            print("Data dikirim")
             await asyncio.sleep(5)
 
     except:
